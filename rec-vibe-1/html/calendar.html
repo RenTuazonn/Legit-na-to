@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="ai.css" />
+  <title>Dynamic Calendar</title>
+  <style>
+    /* Basic styling for header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    /* Navigation links styling */
+    .nav-links {
+      display: flex;
+      list-style-type: none;
+    }
+
+    .nav-links li {
+      margin-right: 20px;
+    }
+
+    /* Profile Icon Styling */
+    .profile-icon {
+      cursor: pointer;
+      margin-left: 20px;
+      position: relative;
+    }
+
+    /* Dropdown Menu Styling */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 30px;
+      right: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      min-width: 160px;
+      z-index: 100;
+    }
+
+    .dropdown li {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown li:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-container">
+      <img src="C:\Users\Rhodora\rec-vibe-1\images\rec3.png" alt="CampusConnect Logo" class="logo-img" />
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="ai.html">Home</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="user.html">Orgs</a></li>
+      </ul>
+    </nav>
+    <div class="profile-icon" onclick="toggleProfileMenu()">S</div>
+    <ul class="dropdown" id="profileDropdown">
+      <li><a href="#">View Profile</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#" onclick="logout()">Log Out</a></li>
+    </ul>
+  </header>
+
+  <div class="calendar">
+    <div class="calendar-header">
+      <button onclick="changeMonth(-1)">‹</button>
+      <h2 id="month-year"></h2>
+      <button onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="day-names">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="calendar-days" id="calendar-days"></div>
+  </div>
+
+  <script>
+    const monthYear = document.getElementById('month-year');
+    const calendarDays = document.getElementById('calendar-days');
+
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    function renderCalendar(month, year) {
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const currentDate = new Date();
+
+      calendarDays.innerHTML = '';
+      monthYear.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+
+      // Add empty cells before the first day of the month
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('div');
+        emptyCell.classList.add('empty');
+        calendarDays.appendChild(emptyCell);
+      }
+
+      // Fill days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = document.createElement('div');
+        dayCell.textContent = day;
+
+        if (
+          day === currentDate.getDate() &&
+          month === currentDate.getMonth() &&
+          year === currentDate.getFullYear()
+        ) {
+          dayCell.classList.add('today');
+        }
+
+        calendarDays.appendChild(dayCell);
+      }
+    }
+
+    function changeMonth(offset) {
+      currentMonth += offset;
+
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      } else if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+
+      renderCalendar(currentMonth, currentYear);
+    }
+
+    renderCalendar(currentMonth, currentYear);
+
+    function toggleProfileMenu() {
+      document.getElementById("profileDropdown").classList.toggle("show");
+    }
+
+    // Close dropdown when clicking outside
+    window.onclick = function(event) {
+      if (!event.target.matches('.profile-icon') && !event.target.matches('.dropdown') && !event.target.matches('.dropdown li')) {
+        const dropdown = document.getElementById("profileDropdown");
+        if (dropdown && dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    };
+
+    function logout() {
+      alert("Logged out!");
+      // Add your logout logic here
+    }
+  </script>
+</body>
+</html>
