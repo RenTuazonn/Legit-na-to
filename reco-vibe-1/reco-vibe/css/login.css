@@ -1,0 +1,123 @@
+body {
+    font-family: 'Times New Roman', serif;
+    background-color: #e0f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 120px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 100px 20px 20px 20px;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.left-content {
+    flex: 1;
+    padding-left: 20px;
+}
+
+.greeting {
+    font-size: 30px;
+    margin-top: 60px;
+    color: #000;
+}
+
+.login-box {
+    width: 320px;
+    background-color: #fff;
+    border: 2px solid #039be5;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.login-box h2 {
+    text-align: center;
+    font-size: 16px;
+    color: #039be5;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.login-button,
+.create-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.login-button {
+    background-color: #039be5;
+    color: white;
+}
+
+.create-button {
+    background-color: #f5b942;
+    color: black;
+}
+
+.forgot {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot a {
+    color: blue;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.forgot a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 140px;
+    }
+
+    .greeting {
+        text-align: center;
+    }
+
+    .login-box {
+        margin-top: 20px;
+    }
+}

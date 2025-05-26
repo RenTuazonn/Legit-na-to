@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Event Recommendations</title>
+    <link rel="stylesheet" href="C:\Users\Rhodora\reco-vibe\css\ai.css">
+</head>
+<body>
+    <header>
+        <h1>Hi <span id="user-name-display">Guest</span>, Here Are Your Event Recommendations!</h1>
+    </header>
+
+    <main>
+        <section id="user-info-section">
+            <h2>Your Profile</h2>
+            <div class="profile-details">
+                <p><strong>Name:</strong> <span id="user-name"></span></p>
+                <p><strong>Location:</strong> <span id="user-location"></span></p>
+                <p><strong>Interests:</strong> <span id="user-interests"></span></p>
+                <p><strong>Recent Activity:</strong> <span id="user-activity"></span></p>
+            </div>
+            <button id="edit-profile-btn">Edit Profile (Simulated)</button>
+        </section>
+
+        <section id="recommendations-section">
+            <h2>Recommended For You</h2>
+            <div id="event-list-container">
+                <!-- Event cards will be injected here by JavaScript -->
+                <p class="loading-message">Loading recommendations...</p>
+            </div>
+        </section>
+
+        <section id="other-events-section">
+            <h2>Discover More Events</h2>
+            <div class="filters">
+                <label for="category-filter">Filter by Category:</label>
+                <select id="category-filter">
+                    <option value="all">All</option>
+                    <option value="Music">Music</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Art">Art</option>
+                    <option value="Food">Food</option>
+                    <option value="Sports">Sports</option>
+                </select>
+            </div>
+            <div id="all-events-container">
+                <!-- All events or filtered events can be shown here -->
+                <p>Explore more events based on filters.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 EventFinder Pro</p>
+    </footer>
+
+    <script src="C:\Users\Rhodora\reco-vibe\js file\ai.js"></script>
+</body>
+</html>
