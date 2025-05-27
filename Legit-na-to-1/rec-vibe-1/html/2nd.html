@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Interests</title>
+  <link rel="stylesheet" href="2nd.css" />
+</head>
+<body>
+  <div class="progress-bar"></div>
+
+  <div class="container">
+    <h1>Choose 5 things you’re really into</h1>
+    
+    <div class="search-bar">
+      <input type="text" placeholder="What kind of school events are you interested in?" />
+    </div>
+
+    <h3>Selected Interests (<span class="counter">0/5</span>)</h3>
+    <div id="selected-container" class="pill-container"></div>
+    
+    <p class="suggestion-label">You might like...</p>
+    <div id="available-container" class="pill-container">
+      <button class="pill">🎵 Music</button>
+      <button class="pill">🎉 Festivals</button>
+      <button class="pill">📝 Writing</button>
+      <button class="pill">💃 Dancing</button>
+      <button class="pill">☕ Coffee</button>
+      <button class="pill">🍜 Foodie</button>
+      <button class="pill">🤝 Social</button>
+      <button class="pill">🏳️‍🌈 LGBTQ+ rights</button>
+      <button class="pill">🎨 Art</button>
+      <button class="pill">🏕️ Camping</button>
+      <button class="pill">📘 Academic</button>
+      <button class="pill">🤖 Clubs</button>
+      <button class="pill">🙌 Volunteer</button>
+      <button class="pill">🏀 Sports</button>
+      <button class="pill">🎮 Video Games</button>
+    </div>
+
+    <div class="footer">
+      <span class="counter">0/5 selected</span>
+      <button type="button" class="next-button" onclick="goToNextPage()" disabled>Next</button>
+    </div>
+  </div>
+  <script>
+    const selectedContainer = document.getElementById('selected-container');
+    const availableContainer = document.getElementById('available-container');
+    const counters = document.querySelectorAll('.counter');
+    const searchInput = document.querySelector('.search-bar input');
+    const nextButton = document.querySelector('.next-button');
+    let selectedCount = 0;
+    const maxSelection = 5;
+
+    function createPillElement(text) {
+      const pill = document.createElement('div');
+      pill.classList.add('pill');
+      pill.textContent = text;
+
+      pill.addEventListener('click', () => {
+        if (pill.classList.contains('selected')) {
+          pill.classList.remove('selected');
+          selectedContainer.removeChild(pill);
+          availableContainer.appendChild(pill);
+          selectedCount--;
+        } else {
+          if (selectedCount >= maxSelection) {
+            alert('You can only select up to 5 items.');
+            return;
+          }
+          pill.classList.add('selected');
+          availableContainer.removeChild(pill);
+          selectedContainer.appendChild(pill);
+          selectedCount++;
+        }
+        counters.forEach(c => c.textContent = `${selectedCount}/5`);
+        updateNextButtonState(); // Update button state after selection
+      });
+
+      return pill;
+    }
+
+    // Setup initial pills (replace buttons with div.pill with event listeners)
+    document.querySelectorAll('#available-container .pill').forEach(pill => {
+      const newPill = createPillElement(pill.textContent);
+      availableContainer.replaceChild(newPill, pill);
+    });
+
+    // Search functionality
+    searchInput.addEventListener('input', () => {
+      const filter = searchInput.value.toLowerCase();
+      const pills = availableContainer.querySelectorAll('.pill');
+      pills.forEach(pill => {
+        const text = pill.textContent.toLowerCase();
+        if (text.includes(filter)) {
+          pill.style.display = 'inline-block';
+        } else {
+          pill.style.display = 'none';
+        }
+      });
+    });
+
+    function goToNextPage() {
+      if (selectedCount < 3) {
+        alert("Please select at least 3 interests before continuing.");
+        return; // Block navigation
+      }
+
+      if (selectedCount > 5) {
+        alert("You can only select up to 5 interests.");
+        return; // Block navigation
+      }
+
+      // Proceed if between 3 and 5 (inclusive) selected
+      window.location.href = "ai.html"; // change to your actual next page
+    }
+
+    // Disable/enable next button based on selected count
+    function updateNextButtonState() {
+      if (selectedCount >= 3) {
+        nextButton.disabled = false; // Enable button
+      } else {
+        nextButton.disabled = true; // Disable button
+      }
+    }
+
+    // Initial button state check
+    updateNextButtonState();
+  </script>
+</body>
+</html>
