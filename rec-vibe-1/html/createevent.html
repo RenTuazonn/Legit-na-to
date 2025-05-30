@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Event</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="createevent.css" />
+  <script src="https://www.gstatic.com/firebasejs/11.8.0/firebase-app.js"></script> 
+</head>
+<body>
+
+<div class="container">
+  <!-- Back Button -->
+  <button type="button" id="backButton" class="back-button">Back to Homepage</button>
+
+  <h2>Create Your Event</h2>
+  <form id="eventForm">
+    <div class="form-group">
+      <label for="eventName">Event Name</label>
+      <input type="text" id="eventName" name="eventName" placeholder="Enter event name..." required />
+    </div>
+
+    <div class="form-group">
+      <label for="eventDate">Event Date</label>
+      <input type="date" id="eventDate" name="eventDate" required />
+    </div>
+
+    <div class="form-group">
+      <label for="eventTime">Event Time</label>
+      <input type="time" id="eventTime" name="eventTime" required />
+    </div>
+
+    <div class="form-group">
+      <label for="eventLocation">Event Location</label>
+      <input type="text" id="eventLocation" name="eventLocation" placeholder="Enter event location..." required />
+    </div>
+
+    <div class="form-group">
+      <label for="eventCategory">Event Category</label>
+      <select id="eventCategory" name="eventCategory" required>
+        <option value="">-- Select Category --</option>
+        <option value="Esports">Esports</option>
+        <option value="Org">Org</option>
+        <option value="Social">Social</option>
+        <option value="Sports">Sports</option>
+        <option value="Academic">Academic</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="eventAttribute">Event Attribute</label>
+      <select id="eventAttribute" name="eventAttribute" required>
+        <option value="">-- Select Attribute --</option>
+        <option value="Large">Large</option>
+        <option value="Small">Small</option>
+        <option value="Family">Family</option>
+        <option value="Competitive">Competitive</option>
+        <option value="Casual">Casual</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="eventDescription">Event Description</label>
+      <textarea id="eventDescription" name="eventDescription" rows="4" placeholder="Describe your event..." required></textarea>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="generateButton">Generate Title and Description</button>
+      <button type="button" id="submitButton">Create Event</button>
+    </div>
+  </form>
+  
+  <!-- Display generated title and description -->
+  <div id="generatedOutput">
+    <h3>Generated Title and Description:</h3>
+    <p><strong>Title:</strong> <span id="generatedTitle"></span></p>
+    <p><strong>Description:</strong> <span id="generatedDescription"></span></p>
+  </div>
+</div>
+
+<script type="module">
+  // Firebase and Event Handling Logic will be here (same as previously).
+</script>
+
+</body>
+</html>

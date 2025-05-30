@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CampusConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="dash.css">
+</head>
+<body>
+  <!-- Navbar Section -->
+ <header class="header">
+   <div class="logo-container">
+      <img src="rec3.png" alt="RecoVibe Logo" class="logo-img" />
+      
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="ai.html">Home</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="user.html">Orgs</a></li>
+          <li class="profile-menu">
+  <div class="profile-icon" onclick="toggleProfileMenu()">
+  <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="#333">
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+  </svg>
+</div>
+  <ul class="dropdown" id="profileDropdown">
+    <li><a href="#">View Profile</a></li>
+    <li><a href="#">Settings</a></li>
+    <li><a href="index.html" onclick="logout()">Log Out</a></li>
+  </ul>
+</li>
+      </ul>
+    
+
+    </nav>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <div class="main-container">
+    <!-- Left Section: Welcome Message -->
+    <div class="welcome-text">
+      <h1>🎓 Admin Dashboard</h1>
+      <p>Welcome to the Admin Dashboard! Manage your events and registered users with ease.</p>
+    </div>
+
+    <!-- Right Section: Back Button and Dashboard Content -->
+    <div class="right-content">
+      <!-- Back Button -->
+      <button class="back-button" onclick="goBack()">🔙 Back</button>
+
+      <!-- Events Section -->
+      <div class="card" id="eventsSection">
+        <h2>📅 Created Events</h2>
+        <input class="filter-input" type="text" id="eventSearch" placeholder="🔍 Search events..." />
+        <div style="margin: 10px 0;">
+          <label for="eventDateFilter">Event Date</label>
+          <input type="date" id="eventDateFilter" class="filter-input" />
+          
+          <label for="categoryFilter">Event Category</label>
+          <select id="categoryFilter" class="filter-input">
+            <option value="">All Categories</option>
+            <option value="Music">Music</option>
+            <option value="Sports">Sports</option>
+            <option value="Academic">Academic</option>
+            <option value="Volunteer">Volunteer</option>
+          </select>
+        </div>
+        <div id="eventsList"></div>
+      </div>
+
+      <!-- Users Section -->
+      <div class="card" id="usersSection">
+        <h2>👥 Registered Users</h2>
+        <input class="filter-input" type="text" id="userSearch" placeholder="🔍 Search users..." />
+        <div id="usersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyAvJKueNtBRrGFxXby-VRkOewdGEkiuGnQ",
+      authDomain: "first-proj-a5fff.firebaseapp.com",
+      projectId: "first-proj-a5fff",
+      storageBucket: "first-proj-a5fff.appspot.com",
+      messagingSenderId: "902560724938",
+      appId: "1:902560724938:web:2956090fc8afb5ce888133",
+      measurementId: "G-0VNSBVGRK7",
+      databaseURL: "https://first-proj-a5fff-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Load Events
+    function loadEvents() {
+      const list = document.getElementById("eventsList");
+      ref(db, "events").on("value", (snapshot) => {
+        const events = snapshot.val();
+        list.innerHTML = '';
+        for (let id in events) {
+          const ev = events[id];
+          list.innerHTML += `
+            <div class="event-card">
+              <strong>${ev.title || "Untitled"}</strong><br>
+              ${ev.desc || "No description"}<br>
+              🗓 ${ev.date || "Unknown"} ⏰ ${ev.time || "N/A"}<br>
+              📍 ${ev.location || "Unknown Location"}
+            </div>
+          `;
+        }
+      });
+    }
+
+    // Load Users
+    function loadUsers() {
+      const list = document.getElementById("usersList");
+      ref(db, "users").on("value", (snapshot) => {
+        const users = snapshot.val();
+        list.innerHTML = '';
+        for (let id in users) {
+          const user = users[id];
+          list.innerHTML += `
+            <div class="user-card">
+              <strong>${user.name || "Unnamed User"}</strong><br>
+              📧 ${user.email || "N/A"}<br>
+              🆔 ${id}
+            </div>
+          `;
+        }
+      });
+    }
+
+    // Run on page load
+    window.onload = function () {
+      loadEvents();
+      loadUsers();
+    };
+  </script>
+  
+  <script>
+    
+    function toggleProfileMenu() {
+      document.getElementById('profileDropdown').classList.toggle('show');
+    }
+    // Back Button Functionality
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</body>
+</html>
