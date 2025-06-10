@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Database</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.9.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvJKueNtBRrGFxXby-VRkOewdGEkiuGnQ",
+  authDomain: "first-proj-a5fff.firebaseapp.com",
+  databaseURL: "https://first-proj-a5fff-default-rtdb.firebaseio.com",
+  projectId: "first-proj-a5fff",
+  storageBucket: "first-proj-a5fff.firebasestorage.app",
+  messagingSenderId: "902560724938",
+  appId: "1:902560724938:web:1922c5b20fb5e851888133",
+  measurementId: "G-E1RCELQNR7"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Fetch and display all events
+    async function loadAllEvents() {
+      const eventsTable = document.getElementById('eventsTableBody');
+      eventsTable.innerHTML = '';
+      const querySnapshot = await getDocs(collection(db, "events"));
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        let status = "Pending";
+        if (data.approved === true) status = "Approved";
+        else if (data.approved === false) status = "Rejected";
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${data.name}</td>
+          <td>${data.date}</td>
+          <td>${data.description}</td>
+          <td>${status}</td>
+        `;
+        eventsTable.appendChild(tr);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAllEvents);
+  </script>
+  <style>
+    table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 8px; }
+    th { background: #f0f0f0; }
+  </style>
+</head>
+<body>
+  <h2>All Events Database</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="eventsTableBody">
+      <!-- Events will be loaded here -->
+    </tbody>
+  </table>
+</body>
+</html>
